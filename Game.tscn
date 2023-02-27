@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Brick/Brick_Container.gd" type="Script" id=1]
 [ext_resource path="res://Paddle/Paddle.tscn" type="PackedScene" id=2]
@@ -9,6 +9,14 @@
 [ext_resource path="res://UI/HUD.tscn" type="PackedScene" id=7]
 [ext_resource path="res://UI/Instructions.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Effects/Fever.gd" type="Script" id=9]
+[ext_resource path="res://Assets/New_Project (5).mp3" type="AudioStream" id=10]
+[ext_resource path="res://Assets/443808__tissman__fail.mp3" type="AudioStream" id=11]
+[ext_resource path="res://Assets/209012__owlstorm__fruit-impact-1.mp3" type="AudioStream" id=12]
+[ext_resource path="res://Assets/370245__morganpurkis__clang.mp3" type="AudioStream" id=13]
+[ext_resource path="res://Assets/615576__adhdreaming__bit-bounce.mp3" type="AudioStream" id=14]
+[ext_resource path="res://Camera2D.gd" type="Script" id=15]
+[ext_resource path="res://Ball/Comet_Container.gd" type="Script" id=16]
+[ext_resource path="res://Assets/570634__bsp7176__music.mp3" type="AudioStream" id=17]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 100, 500 )
@@ -16,10 +24,17 @@ extents = Vector2( 100, 500 )
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 612, 100 )
 
+[sub_resource type="Environment" id=3]
+background_mode = 4
+ambient_light_color = Color( 1, 1, 1, 1 )
+glow_enabled = true
+glow_intensity = 2.71
+glow_bloom = 0.1
+
 [node name="Game" type="Node2D"]
 script = ExtResource( 4 )
 
-[node name="Wall_Container" type="Node2D" parent="."]
+[node name="Wall_Container" type="CanvasLayer" parent="."]
 
 [node name="Wall_Left" type="StaticBody2D" parent="Wall_Container"]
 script = ExtResource( 6 )
@@ -90,5 +105,40 @@ visible = false
 
 [node name="Instructions" parent="UI" instance=ExtResource( 8 )]
 pause_mode = 2
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+pause_mode = 2
+stream = ExtResource( 10 )
+autoplay = true
+
+[node name="Die" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 11 )
+volume_db = -16.605
+
+[node name="Brick_Audio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 13 )
+volume_db = -10.487
+pitch_scale = 0.9
+
+[node name="Wall_Audio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 12 )
+volume_db = 10.488
+
+[node name="Paddle_Audio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 14 )
+
+[node name="Camera" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
+script = ExtResource( 15 )
+
+[node name="Comet_Container" type="Node2D" parent="."]
+script = ExtResource( 16 )
+
+[node name="mussc" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 17 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 3 )
 
 [connection signal="timeout" from="Fever/Timer" to="Fever" method="_on_Timer_timeout"]

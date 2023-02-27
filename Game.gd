@@ -1,13 +1,13 @@
 extends Node2D
 
-export var margin = Vector2(145,105)
+export var margin = Vector2(160,105)
 export var index = Vector2(100,40)
 
 func _ready():
 	if Global.level < 0 or Global.level >= len(Levels.levels):
 		Global.end_game(true)
 	else:
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		var level = Levels.levels[Global.level]
 		var layout = level["layout"]
 		var Brick_Container = get_node_or_null("/root/Game/Brick_Container")
@@ -25,3 +25,6 @@ func _ready():
 		var Instructions = get_node_or_null("/root/Game/UI/Instructions")
 		if Instructions != null:
 			Instructions.set_instructions(level["name"],level["instructions"])
+
+func _physics_process(_delta):
+	pass
